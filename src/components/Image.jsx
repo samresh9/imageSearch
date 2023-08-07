@@ -1,7 +1,14 @@
-function Image({ url }) {
+function Image({ data, onShowModal }) {
   return (
     <>
-      <img className="inset-0 object-cover w-full h-72" src={url} alt="Image" />
+      <div>
+        <img
+          className="object-cover w-full sm:h-full"
+          src={data.urls.small}
+          alt={data.alt_description}
+          onClick={() => onShowModal(data.urls.regular)}
+        />
+      </div>
     </>
   );
 }
