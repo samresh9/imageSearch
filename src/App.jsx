@@ -14,6 +14,15 @@ function App() {
   const [errorMsg, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [selectedImg, setSelectedImg] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  function handleShowModal(url) {
+    setSelectedImg(url);
+    setShowModal(true);
+  }
+  function handleHideModal() {
+    setShowModal(false);
+  }
 
   function handlePageIncrease() {
     setPage((page) => page + 1);
@@ -41,7 +50,7 @@ function App() {
           }
           const data = await response.json();
           if (data.results.length === 0) throw new Error("Image not found");
-          console.log(data);
+          console.log(data.results);
           console.log("hi");
           setImage(data.results);
           setTotalPages(data.total_pages);
@@ -75,6 +84,9 @@ function App() {
         isLoading={isLoading}
         errorMsg={errorMsg}
         query={query}
+        selectedImg={selectedImg}
+        showModal={showModal}
+        onShowModal={handleShowModal}
       />
       {isLoading ? null : (
         <PageHandler
@@ -84,8 +96,37 @@ function App() {
           onPagePrevious={handlePageDecrease}
         />
       )}
+      <Modal
+        selectedImg={selectedImg}
+        showModal={showModal}
+        onHideModal={handleHideModal}
+      />
     </>
   );
 }
-
+function Modal({ showModal, selectedImg, onHideModal }) {
+  return (
+    <>
+      {showModal && selectedImg && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+          <div>
+            <div className="flex justify-end md:mt-4">
+              <button
+                onClick={onHideModal}
+                className="px-0.5 py-0.5 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
+              >
+                ❌
+              </button>
+            </div>
+            <img
+              src={selectedImg}
+              alt="Image"
+              className="object-contain w-full h-[60vh] sm:h-[60vh] md:h-[75vh] "
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 export default App;
