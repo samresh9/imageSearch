@@ -1,5 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import PageHandler from "./components/PageHandler";
+import Search from "./components/Search";
+import ImageList from "./components/ImageList";
 
 import "./App.css";
 
@@ -83,121 +87,5 @@ function App() {
     </>
   );
 }
-function PageHandler({ page, totalPages, onPageNext, onPagePrevious }) {
-  return (
-    <>
-      <div className="flex justify-center mb-4 gap-72">
-        {console.log(page)}
-        {page > 1 && (
-          <>
-            {" "}
-            <button
-              className="bg-blue-600 px-6 py-2.5 text-white rounded-tr rounded-br 
-            focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
-              onClick={onPagePrevious}
-            >
-              Previous
-            </button>
-            <p>{page}</p>
-          </>
-        )}
-        {page < totalPages && (
-          <button
-            className="bg-blue-600 px-6 py-2.5 text-white rounded focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
-            onClick={onPageNext}
-          >
-            Next
-          </button>
-        )}
-      </div>
-    </>
-  );
-}
-function Header({ children, query }) {
-  return (
-    <>
-      <div
-        className={`flex items-center py-10 bg-gray-500 ${
-          query ? " " : "h-screen"
-        }`}
-      >
-        <div className="w-full max-w-md mx-auto">
-          <h1 className="mb-5 text-2xl font-bold text-center text-white">
-            Search Image
-          </h1>
-          {children}
-        </div>
-      </div>
-    </>
-  );
-}
-function Search({ setQuery, query, setPage }) {
-  const [searchTerm, setSearchTerm] = useState(query);
-  const handleClick = () => {
-    setPage(1);
-    setQuery(searchTerm);
-  };
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setPage(1);
-      setQuery(searchTerm);
-    }
-  };
-  return (
-    <>
-      <div className="flex">
-        <input
-          type="search"
-          placeholder="Search Anything..."
-          className="w-full px-5 py-5 border bg-gray-50 hover:border-red-500 hover:bg-slate-100 focus:border-blue-500 focus:outline-none"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={handleKeyDown}
-        ></input>
-        <button
-          className="bg-blue-600 px-6 py-2.5 text-white rounded-tr rounded-br focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
-          onClick={handleClick}
-        >
-          Search
-        </button>
-      </div>
-    </>
-  );
-}
 
-function ImageList({ images, isLoading, errorMsg, query }) {
-  console.log("ImageList - isLoading:", isLoading);
-  console.log("ImageList - errorMsg:", errorMsg);
-  return (
-    <>
-      {isLoading && <Loader />}
-      {errorMsg && <Errors errorMsg={errorMsg} />}
-      {!isLoading && !errorMsg && query && (
-        <>
-          <h1 className="mt-5 text-2xl text-center">{`Results For ${query}`}</h1>
-          <div className="grid gap-4 px-4 mx-auto my-10 grid-container md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl">
-            {images?.map((image) => (
-              <Image key={image.id} url={image.urls.small} />
-            ))}
-          </div>
-        </>
-      )}
-    </>
-  );
-}
-
-function Image({ url }) {
-  return (
-    <>
-      <img className="inset-0 object-cover w-full h-72" src={url} alt="Image" />
-    </>
-  );
-}
-
-function Loader() {
-  return <h2 className="mt-20 text-center"> LOADING...</h2>;
-}
-function Errors({ errorMsg }) {
-  return <h2 className="mt-20 text-center text-red-500 ">{errorMsg}</h2>;
-}
 export default App;
