@@ -1,14 +1,17 @@
 import { useState } from "react";
-function Search({ setQuery, query, setPage }) {
+function Search({ setQuery, query, setPage, setShowSavedImg }) {
   const [searchTerm, setSearchTerm] = useState(query);
   const handleClick = () => {
+    setStates()
+  };
+  const setStates= ()=>{
     setPage(1);
     setQuery(searchTerm);
-  };
+    setShowSavedImg(false);
+  }
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      setPage(1);
-      setQuery(searchTerm);
+      setStates()
     }
   };
   return (

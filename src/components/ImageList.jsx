@@ -2,8 +2,6 @@ import Errors from "./Errors";
 import Loader from "./Loader";
 import Image from "./Image";
 function ImageList({ images, isLoading, errorMsg, query , onShowModal}) {
-  console.log("ImageList - isLoading:", isLoading);
-  console.log("ImageList - errorMsg:", errorMsg);
   return (
     <>
       {isLoading && <Loader />}
@@ -11,7 +9,7 @@ function ImageList({ images, isLoading, errorMsg, query , onShowModal}) {
       {!isLoading && !errorMsg && query && (
         <>
           <h1 className="mt-5 text-2xl text-center">{`Results For ${query.toUpperCase()}`}</h1>
-          <div className="grid gap-4 px-4 mx-auto my-10 grid-container md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl">
+          <div className="grid gap-4 px-4 mx-auto mt-10 mb-5 grid-container md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl">
             {images?.map((image) => (
               <Image key={image.id} data={image} onShowModal={onShowModal} />
             ))}

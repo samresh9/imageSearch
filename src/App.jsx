@@ -5,6 +5,8 @@ import PageHandler from "./components/PageHandler";
 import Search from "./components/Search";
 import ImageList from "./components/ImageList";
 import Modal from "./components/Modal";
+import Main from "./components/Main";
+
 
 import "./App.css";
 
@@ -17,10 +19,14 @@ function App() {
   const [totalPages, setTotalPages] = useState(0);
   const [selectedImg, setSelectedImg] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [savedImg, setSavedImg] = useState([]);
+  const [showSavedImg, setShowSavedImg] = useState(false);
+
   function handleShowModal(url) {
     setSelectedImg(url);
     setShowModal(true);
   }
+
   function handleHideModal() {
     setShowModal(false);
   }
@@ -28,17 +34,35 @@ function App() {
   function handlePageIncrease() {
     setPage((page) => page + 1);
   }
+
   function handlePageDecrease() {
     setPage((page) => page - 1);
   }
+
   function handleKeyPress(e) {
     if (e.code === "Escape") {
       setShowModal(false);
     }
   }
-
-  console.log(import.meta.env.VITE_UNSPLASH_KEY, "key");
+  function handleAddSaved(newImg) {
+    setSavedImg((savedImg) => [...savedImg, newImg]);
+    setShowModal(false);
+  }
+  function handleDeleteSaved(img){
+   setSavedImg((savedImg)=> savedImg.filter((imgs)=> imgs !== img)) 
+   setShowModal(false);
   
+  }
+  function handleShowSavedImg() {
+    setShowSavedImg((value)=> !value);
+  }
+   useEffect(() => {
+    console.log(savedImg ,"effect")
+     if (savedImg.length === 0) {
+      handleShowSavedImg();
+     }
+   }, [savedImg]);
+
   useEffect(
     function () {
       const controller = new AbortController();
@@ -52,19 +76,18 @@ function App() {
             }`,
             { signal: controller.signal }
           );
-          console.log(response.ok);
+
           if (!response.ok) {
             throw new Error("Something went wrong. Please try again 🥲");
           }
           const data = await response.json();
           if (data.results.length === 0) throw new Error("Image not found");
           console.log(data.results);
-          console.log("hi");
+
           setImage(data.results);
           setTotalPages(data.total_pages);
           setError("");
         } catch (err) {
-          console.log(err);
           if (err.name !== "AbortError") setError(err.message);
         } finally {
           setIsloading(false);
@@ -84,34 +107,54 @@ function App() {
   );
   return (
     <>
-      <Header query={query}>
-        <Search setQuery={setQuery} query={query} setPage={setPage} />
-      </Header>
-      <ImageList
-        images={image}
-        isLoading={isLoading}
-        errorMsg={errorMsg}
+      <Header
         query={query}
         selectedImg={selectedImg}
-        showModal={showModal}
-        onShowModal={handleShowModal}
-      />
-      {image && (
-        <PageHandler
-          page={page}
-          totalPages={totalPages}
-          onPageNext={handlePageIncrease}
-          onPagePrevious={handlePageDecrease}
+        setShowSavedImg={handleShowSavedImg}
+      >
+        <Search
+          setQuery={setQuery}
+          query={query}
+          setPage={setPage}
+          setShowSavedImg={setShowSavedImg}
         />
-      )}
+      </Header>
+      <Main
+        showSavedImg={showSavedImg}
+        savedImg={savedImg}
+        onShowModal={handleShowModal}
+      >
+        <ImageList
+          images={image}
+          isLoading={isLoading}
+          errorMsg={errorMsg}
+          query={query}
+          selectedImg={selectedImg}
+          showModal={showModal}
+          onShowModal={handleShowModal}
+        />
+
+        {query && image.length > 0 && !isLoading && (
+          <PageHandler
+            page={page}
+            totalPages={totalPages}
+            onPageNext={handlePageIncrease}
+            onPagePrevious={handlePageDecrease}
+          />
+        )}
+      </Main>
       <Modal
         selectedImg={selectedImg}
         showModal={showModal}
         onHideModal={handleHideModal}
         onKeyPress={handleKeyPress}
+        onHandleSave={handleAddSaved}
+        onHandleDelete={handleDeleteSaved}
+        showSavedImg={showSavedImg}
       />
     </>
   );
 }
+
 
 export default App;

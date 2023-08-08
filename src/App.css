@@ -1,4 +1,4 @@
-.grid-container {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust the minmax values as needed */
- 
+html,body{
+    height: 100%;
+    width: 100%;
 }
