@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import PageHandler from "./components/PageHandler";
 import Search from "./components/Search";
 import ImageList from "./components/ImageList";
+import Modal from "./components/Modal";
 
 import "./App.css";
 
@@ -30,7 +31,14 @@ function App() {
   function handlePageDecrease() {
     setPage((page) => page - 1);
   }
+  function handleKeyPress(e) {
+    if (e.code === "Escape") {
+      setShowModal(false);
+    }
+  }
+
   console.log(import.meta.env.VITE_UNSPLASH_KEY, "key");
+  
   useEffect(
     function () {
       const controller = new AbortController();
@@ -88,7 +96,7 @@ function App() {
         showModal={showModal}
         onShowModal={handleShowModal}
       />
-      {isLoading ? null : (
+      {image && (
         <PageHandler
           page={page}
           totalPages={totalPages}
@@ -100,33 +108,10 @@ function App() {
         selectedImg={selectedImg}
         showModal={showModal}
         onHideModal={handleHideModal}
+        onKeyPress={handleKeyPress}
       />
     </>
   );
 }
-function Modal({ showModal, selectedImg, onHideModal }) {
-  return (
-    <>
-      {showModal && selectedImg && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
-          <div>
-            <div className="flex justify-end md:mt-4">
-              <button
-                onClick={onHideModal}
-                className="px-0.5 py-0.5 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
-              >
-                ❌
-              </button>
-            </div>
-            <img
-              src={selectedImg}
-              alt="Image"
-              className="object-contain w-full h-[60vh] sm:h-[60vh] md:h-[75vh] "
-            />
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+
 export default App;
