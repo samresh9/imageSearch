@@ -1,9 +1,8 @@
-
-function Header({ children, query }) {
+function Header({ children, query , selectedImg , setShowSavedImg }) {
   return (
     <>
       <div
-        className={`flex items-center py-10 bg-gray-500 ${
+        className={`flex items-center  px-5 py-10 bg-blue-500 ${
           query ? " " : "h-screen"
         }`}
       >
@@ -12,9 +11,25 @@ function Header({ children, query }) {
             Search Image
           </h1>
           {children}
+          <div className="flex justify-center mt-8">
+            {query && (
+              <SavedImages
+                selectedImg={selectedImg}
+                setShowSavedImg={setShowSavedImg}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>
   );
 }
+function SavedImages({  setShowSavedImg }) {
+  return (
+    <>
+      <button onClick={setShowSavedImg}>Saved Images</button>
+    </>
+  );
+}
+
 export default Header;
