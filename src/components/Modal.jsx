@@ -7,6 +7,8 @@ function Modal({
   onHandleSave,
   showSavedImg,
   onHandleDelete,
+  onHandleShowSaveImg,
+  savedImg
 }) {
   useEffect(
     function () {
@@ -14,6 +16,7 @@ function Modal({
         if (e.code === "Escape") {
           console.log("closing");
           onHideModal();
+          if(showSavedImg && !showModal)onHandleShowSaveImg();
         }
       }
       document.addEventListener("keydown", callback);
@@ -21,7 +24,7 @@ function Modal({
         document.removeEventListener("keydown", callback);
       };
     },
-    [onHideModal]
+    [onHideModal,onHandleShowSaveImg, showSavedImg, showModal]
   );
 
   return (
@@ -29,7 +32,7 @@ function Modal({
       {showModal && (
         <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
           <div>
-            <div className="flex justify-end gap-4 text-white md:mt-1">
+            <div className="flex justify-end gap-4 mx-4 text-white md:mt-1">
               {showSavedImg ? (
                 <>
                   <button
@@ -44,10 +47,11 @@ function Modal({
               ) : (
                 <>
                   <button
+                    disabled={savedImg.includes(selectedImg)}
                     onClick={() => {
                       onHandleSave(selectedImg);
                     }}
-                    className="p-1 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
+                    className="p-1 mb-1 text-sm text-white bg-blue-600 rounded-md disabled:bg-gray-400 hover:bg-gray-300"
                   >
                     Save
                   </button>
@@ -56,17 +60,19 @@ function Modal({
               <div>
                 <button
                   onClick={onHideModal}
-                  className="px-0.5 py-0.5 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
+                  className="px-0.5  text-sm py-0.5 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
                 >
                   ❌
                 </button>
               </div>
             </div>
-            <img
-              src={selectedImg}
-              alt="Image"
-              className="object-contain w-full h-[60vh] sm:h-[60vh] md:h-[75vh] "
-            />
+            <div className="my-4">
+              <img
+                src={selectedImg}
+                alt="Image"
+                className="object-contain w-full border border-white  h-[60vh] sm:h-[60vh] md:h-[75vh]  "
+              />
+            </div>
           </div>
         </div>
       )}
