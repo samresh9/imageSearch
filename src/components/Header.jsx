@@ -4,7 +4,7 @@ function Header({ children, query , selectedImg , setShowSavedImg  , savedImg}) 
   return (
     <>
       <div
-        className={`flex items-center  px-5 py-10 bg-blue-500 ${
+        className={`flex items-center  px-5 py-10 bg-blue-400 ${
           query ? " " : "h-screen"
         }`}
       >
@@ -31,7 +31,7 @@ function SavedImages({  setShowSavedImg , savedImg}) {
   return (
     <>
       <button
-        className="px-6 py-2 text-blue-800 bg-white rounded focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
+        className="px-6 py-2 text-blue-800 bg-white rounded hover:text-blue-500 focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
         onClick={setShowSavedImg}
         disabled={savedImg.length === 0 }
       >

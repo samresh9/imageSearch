@@ -39,7 +39,7 @@ function Modal({
                     onClick={() => {
                       onHandleDelete(selectedImg);
                     }}
-                    className="p-1 mb-2 text-white bg-gray-600 rounded-md hover:bg-gray-300"
+                    className="p-1 mb-2 text-white bg-red-600 rounded-md hover:bg-red-300"
                   >
                   
                     Delete
