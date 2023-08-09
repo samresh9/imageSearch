@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import PageHandler from "./components/PageHandler";
@@ -6,7 +5,6 @@ import Search from "./components/Search";
 import ImageList from "./components/ImageList";
 import Modal from "./components/Modal";
 import Main from "./components/Main";
-
 
 import "./App.css";
 
@@ -48,20 +46,19 @@ function App() {
     setSavedImg((savedImg) => [...savedImg, newImg]);
     setShowModal(false);
   }
-  function handleDeleteSaved(img){
-   setSavedImg((savedImg)=> savedImg.filter((imgs)=> imgs !== img)) 
-   setShowModal(false);
-  
+  function handleDeleteSaved(img) {
+    setSavedImg((savedImg) => savedImg.filter((imgs) => imgs !== img));
+    setShowModal(false);
   }
   function handleShowSavedImg() {
-    setShowSavedImg((value)=> !value);
+    setShowSavedImg((value) => !value);
   }
-   useEffect(() => {
-    console.log(savedImg ,"effect")
-     if (savedImg.length === 0) {
+  useEffect(() => {
+    console.log(savedImg, "effect");
+    if (savedImg.length === 0) {
       handleShowSavedImg();
-     }
-   }, [savedImg]);
+    }
+  }, [savedImg]);
 
   useEffect(
     function () {
@@ -158,6 +155,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;
