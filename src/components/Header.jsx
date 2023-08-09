@@ -1,4 +1,6 @@
-function Header({ children, query , selectedImg , setShowSavedImg }) {
+function Header({ children, query , selectedImg , setShowSavedImg  , savedImg}) {
+
+  
   return (
     <>
       <div
@@ -16,6 +18,7 @@ function Header({ children, query , selectedImg , setShowSavedImg }) {
               <SavedImages
                 selectedImg={selectedImg}
                 setShowSavedImg={setShowSavedImg}
+                savedImg={savedImg}
               />
             )}
           </div>
@@ -24,10 +27,16 @@ function Header({ children, query , selectedImg , setShowSavedImg }) {
     </>
   );
 }
-function SavedImages({  setShowSavedImg }) {
+function SavedImages({  setShowSavedImg , savedImg}) {
   return (
     <>
-      <button onClick={setShowSavedImg}>Saved Images</button>
+      <button
+        className="px-6 py-2 text-blue-800 bg-white rounded focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
+        onClick={setShowSavedImg}
+        disabled={savedImg.length === 0 }
+      >
+        Saved Images
+      </button>
     </>
   );
 }

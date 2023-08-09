@@ -111,6 +111,7 @@ function App() {
         query={query}
         selectedImg={selectedImg}
         setShowSavedImg={handleShowSavedImg}
+        savedImg={savedImg}
       >
         <Search
           setQuery={setQuery}
@@ -151,6 +152,8 @@ function App() {
         onHandleSave={handleAddSaved}
         onHandleDelete={handleDeleteSaved}
         showSavedImg={showSavedImg}
+        onHandleShowSaveImg={handleShowSavedImg}
+        savedImg={savedImg}
       />
     </>
   );
