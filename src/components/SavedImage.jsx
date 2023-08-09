@@ -1,14 +1,14 @@
 function SavedImage({ data, onShowModal }) {
   return (
     <>
-      <div className="mb-5">
+      <button className="relative max-w-xs overflow-hidden">
         <img
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full transition duration-300 ease-in-out rounded hover:scale-110"
           src={data}
           alt="img"
           onClick={() => onShowModal(data)}
         />
-      </div>
+      </button>
     </>
   );
 }
