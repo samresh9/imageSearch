@@ -52,13 +52,14 @@ function App() {
   }
   function handleShowSavedImg() {
     setShowSavedImg((value) => !value);
-  }
-    useEffect(() => {
-      console.log(savedImg, "effect");
-      if (savedImg.length === 0) {
-        handleShowSavedImg();
-      }
-    }, [savedImg]);
+    
+  useEffect(() => {
+    
+    if (savedImg.length === 0) {
+      handleShowSavedImg();
+    }
+  }, [savedImg]);
+
 
   
   useEffect(
@@ -80,8 +81,6 @@ function App() {
           }
           const data = await response.json();
           if (data.results.length === 0) throw new Error("Image not found");
-          console.log(data.results);
-
           setImage(data.results);
           setTotalPages(data.total_pages);
           setError("");
