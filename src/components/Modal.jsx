@@ -67,7 +67,7 @@ function Modal({
                 </button>
               </div>
             </div>
-            <div className="my-4">
+            <div className="mx-4">
               <img
                 src={selectedImg}
                 alt="Image"
