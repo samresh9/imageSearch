@@ -52,6 +52,7 @@ function App() {
   }
   function handleShowSavedImg() {
     setShowSavedImg((value) => !value);
+  }
     
   useEffect(() => {
     
