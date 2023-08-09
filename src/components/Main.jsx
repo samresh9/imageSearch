@@ -9,20 +9,23 @@ function Main ({children , showSavedImg , savedImg , onShowModal, setSavedImg}){
     );
 }
 function SavedImageList({ savedImg , onShowModal , setSavedImg }) {
-    useEffect(() => {
-      const savedImgs = JSON.parse(localStorage.getItem("savedImgs"));
-      if (savedImgs) {
-        setSavedImg(savedImgs);
-      }
-    }, [setSavedImg]);
 
-    useEffect(() => {
-      localStorage.setItem("savedImgs", JSON.stringify(savedImg));
-    }, [savedImg]);
+  useEffect(() => {
+    const savedImgs = JSON.parse(localStorage.getItem("savedImgs"));
+    if (savedImgs) {
+      setSavedImg(savedImgs);
+    }
+  }, [setSavedImg]);
+
+  useEffect(() => {
+    localStorage.setItem("savedImgs", JSON.stringify(savedImg));
+  }, [savedImg]);
+
+
   return (
     <div className="grid gap-4 px-4 mx-auto mt-10 mb-5 grid-container md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl">
-      {savedImg?.map((image) => (
-        <SavedImage key={image.id} data={image} onShowModal={onShowModal} />
+      {savedImg?.map((image, i) => (
+        <SavedImage key={i} data={image} onShowModal={onShowModal} />
       ))}
     </div>
   );
@@ -30,7 +33,7 @@ function SavedImageList({ savedImg , onShowModal , setSavedImg }) {
 function SavedImage({data , onShowModal}){
     return (
       <>
-        <div>
+        <div className="mb-5">
           <img
             className="object-cover w-full h-full"
             src={data}

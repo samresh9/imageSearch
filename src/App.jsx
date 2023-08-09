@@ -53,16 +53,14 @@ function App() {
   function handleShowSavedImg() {
     setShowSavedImg((value) => !value);
   }
-  useEffect(() => {
-    console.log(savedImg, "effect");
-    if (savedImg.length === 0) {
-      handleShowSavedImg();
-    }
-  }, [savedImg]);
+    useEffect(() => {
+      console.log(savedImg, "effect");
+      if (savedImg.length === 0) {
+        handleShowSavedImg();
+      }
+    }, [savedImg]);
 
-
-
-
+  
   useEffect(
     function () {
       const controller = new AbortController();
@@ -124,7 +122,7 @@ function App() {
         showSavedImg={showSavedImg}
         savedImg={savedImg}
         onShowModal={handleShowModal}
-        setSavedImg={selectedImg}
+        setSavedImg={setSavedImg}
       >
         <ImageList
           images={image}
