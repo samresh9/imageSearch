@@ -60,6 +60,20 @@ function App() {
     }
   }, [savedImg]);
 
+  // Load saved images from localStorage on component mount
+  // Load saved images from localStorage on component mount
+  useEffect(() => {
+    const savedImages = JSON.parse(localStorage.getItem("savedImages"));
+    if (Array.isArray(savedImages)) {
+      setSavedImg(savedImages);
+    }
+  }, []);
+
+  // Save images to localStorage whenever savedImg changes
+  useEffect(() => {
+    localStorage.setItem("savedImages", JSON.stringify(savedImg));
+  }, [savedImg]);
+
   useEffect(
     function () {
       const controller = new AbortController();
