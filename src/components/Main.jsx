@@ -23,11 +23,15 @@ function SavedImageList({ savedImg , onShowModal , setSavedImg }) {
 
 
   return (
+    <>    
+    <h2 className="text-blue-500">Saved Images</h2>
     <div className="grid gap-4 px-4 mx-auto mt-10 mb-5 grid-container md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl">
       {savedImg?.map((image, i) => (
         <SavedImage key={i} data={image} onShowModal={onShowModal} />
       ))}
     </div>
+    </>
+
   );
 }
 function SavedImage({data , onShowModal}){
