@@ -60,18 +60,8 @@ function App() {
     }
   }, [savedImg]);
 
-  // Load saved images from localStorage on component mount
-  useEffect(() => {
-    const  savedImgs = JSON.parse(localStorage.getItem("savedImgs"));
-    if(savedImgs){
-      setSavedImg(savedImgs);
-    }
-  }, []);
 
-  // Save images to localStorage whenever savedImg changes
-  useEffect(() => {
-    localStorage.setItem("savedImgs", JSON.stringify(savedImg));
-  }, [savedImg]);
+
 
   useEffect(
     function () {
@@ -134,6 +124,7 @@ function App() {
         showSavedImg={showSavedImg}
         savedImg={savedImg}
         onShowModal={handleShowModal}
+        setSavedImg={selectedImg}
       >
         <ImageList
           images={image}
