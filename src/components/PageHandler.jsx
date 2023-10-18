@@ -13,6 +13,8 @@ function PageHandler({ page, totalPages, onPageNext, onPagePrevious }) {
             <p>{page}</p>
           </>
         )}
+
+        
         {page < totalPages && (
           <button
             className="px-6 py-2 text-white bg-blue-600 rounded focus:ring-2 focus:ring-blue-300 disabled:bg-gray-400"
